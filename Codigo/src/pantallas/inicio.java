@@ -31,7 +31,7 @@ import java.awt.event.ActionEvent;
 
 public class inicio {
 
-	private JFrame frame;
+	private JFrame inicio;
 	private JTextField usuario;
 	private JTextField contrasena;
 
@@ -43,7 +43,7 @@ public class inicio {
 			public void run() {
 				try {
 					inicio window = new inicio();
-					window.frame.setVisible(true);
+					window.inicio.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -62,17 +62,18 @@ public class inicio {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.getContentPane().setBackground(Color.WHITE);
-		frame.setResizable(false);
-		frame.setBounds(100, 100, 1280, 720);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
+		inicio = new JFrame();
+		inicio.setTitle("Iniciar sesion");
+		inicio.getContentPane().setBackground(Color.WHITE);
+		inicio.setResizable(false);
+		inicio.setBounds(100, 100, 1280, 720);
+		inicio.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		inicio.getContentPane().setLayout(null);
 		
 		JPanel panel_izquierdo = new JPanel();
 		panel_izquierdo.setBackground(new Color(58,177,155));
 		panel_izquierdo.setBounds(0, 0, 640, 681);
-		frame.getContentPane().add(panel_izquierdo);
+		inicio.getContentPane().add(panel_izquierdo);
 		panel_izquierdo.setLayout(null);
 		
 		JLabel lblBienvenidoDeNuevo = new JLabel("Bienvenido de nuevo!");
@@ -95,7 +96,7 @@ public class inicio {
 		JPanel panel_derecho = new JPanel();
 		panel_derecho.setBackground(Color.WHITE);
 		panel_derecho.setBounds(640, 0, 626, 681);
-		frame.getContentPane().add(panel_derecho);
+		inicio.getContentPane().add(panel_derecho);
 		panel_derecho.setLayout(null);
 		
 		usuario = new JTextField();
@@ -125,20 +126,19 @@ public class inicio {
 						String user = usuario.getText();
 						String pass = contrasena.getText();
 						
-						((java.sql.Statement)statement).executeUpdate("Insert into alumno(nombre,matricula,grado,telefono,direccion,nacionalidad) values('"+nombre+"','"+matricula+"','"+grado+"','"+telefono+"','"+direccion+"','"+nacionalidad+"')");
-						"select usuariofrom usuario(user,pass)"
-						conexion.close();
+						ResultSet resultSet = statement.executeQuery("select id_usuario from usuario where user='"+user+"' AND pass='"+pass+"' ;");
 						
-						inputnombre.setText("");
-						inputmatricula.setText("");
-						inputgrado.setText("");
-						inputtelefono.setText("");
-						inputdireccion.setText("");
-						inputnacionalidad.setText("");
+						if(resultSet.next() ==  true) {
+							//txtrIngresaTusCredenciales.setText("USUARIO VALIDADO");
+							administrador nuevaVentanaAdministradorInicio = new administrador();
+							nuevaVentanaAdministradorInicio.setVisible(true);
+							inicio.this.dispose();
+						}
+						
+						conexion.close();
 	
-						lblresp.setText("Alumno registrado");			
 					}else {
-						lblresp.setText("No hay conexion con la base de datos");
+						txtrIngresaTusCredenciales.setText("USUARIO O CONTRASEÑA INCORRECTOS");
 					}
 					
 				} catch(ClassNotFoundException o) {
