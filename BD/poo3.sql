@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 11-11-2018 a las 18:40:37
+-- Tiempo de generación: 11-11-2018 a las 20:52:34
 -- Versión del servidor: 10.1.31-MariaDB
 -- Versión de PHP: 5.6.34
 
@@ -257,6 +257,7 @@ INSERT INTO `tienda` (`id_tienda`, `nombre_tienda`) VALUES
 
 CREATE TABLE `usuario` (
   `id_usuario` int(10) NOT NULL,
+  `nombres` varchar(200) NOT NULL,
   `user` varchar(100) NOT NULL,
   `pass` varchar(100) NOT NULL,
   `id_permiso` int(2) DEFAULT NULL
@@ -266,11 +267,11 @@ CREATE TABLE `usuario` (
 -- Volcado de datos para la tabla `usuario`
 --
 
-INSERT INTO `usuario` (`id_usuario`, `user`, `pass`, `id_permiso`) VALUES
-(1, 'marin', '123', 1),
-(2, 'yeisson', '123', 1),
-(3, 'steven', '123', 1),
-(4, 'vendedor', '123', 2);
+INSERT INTO `usuario` (`id_usuario`, `nombres`, `user`, `pass`, `id_permiso`) VALUES
+(1, 'Cristian Marin', 'marin', '123', 1),
+(2, 'Yeisson Castro', 'yeisson', '123', 1),
+(3, 'Steven Gonzales', 'steven', '123', 1),
+(4, 'Benito Camelas', 'vendedor', '123', 2);
 
 --
 -- Índices para tablas volcadas

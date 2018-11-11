@@ -1,5 +1,10 @@
 package pantallas;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 
 import java.awt.EventQueue;
@@ -21,6 +26,8 @@ import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import javax.swing.JButton;
 import javax.swing.JTextField;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class inicio {
 
@@ -106,6 +113,43 @@ public class inicio {
 		panel_derecho.add(contrasena);
 		
 		JButton btnIngresar = new JButton("INGRESAR");
+		btnIngresar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					Class.forName("com.mysql.jdbc.Driver");
+					java.sql.Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/poo3","root","");
+					
+					Statement statement = conexion.createStatement();
+					
+					if(conexion != null) {
+						String user = usuario.getText();
+						String pass = contrasena.getText();
+						
+						((java.sql.Statement)statement).executeUpdate("Insert into alumno(nombre,matricula,grado,telefono,direccion,nacionalidad) values('"+nombre+"','"+matricula+"','"+grado+"','"+telefono+"','"+direccion+"','"+nacionalidad+"')");
+						"select usuariofrom usuario(user,pass)"
+						conexion.close();
+						
+						inputnombre.setText("");
+						inputmatricula.setText("");
+						inputgrado.setText("");
+						inputtelefono.setText("");
+						inputdireccion.setText("");
+						inputnacionalidad.setText("");
+	
+						lblresp.setText("Alumno registrado");			
+					}else {
+						lblresp.setText("No hay conexion con la base de datos");
+					}
+					
+				} catch(ClassNotFoundException o) {
+					// TODO Auto-generated catch block
+					o.printStackTrace();
+				} catch (SQLException l) {
+					// TODO Auto-generated catch block
+					l.printStackTrace();					
+				}
+			}
+		});
 		btnIngresar.setForeground(Color.WHITE);
 		btnIngresar.setBounds(260, 455, 147, 37);
 		btnIngresar.setBackground(new Color(58,177,155));
