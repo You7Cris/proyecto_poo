@@ -20,6 +20,7 @@ import java.awt.GridLayout;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.RowSpec;
+import com.mysql.jdbc.ResultSetMetaData;
 import com.jgoodies.forms.layout.FormSpecs;
 import java.awt.FlowLayout;
 import java.awt.GridBagLayout;
@@ -112,7 +113,7 @@ public class inicio {
 		contrasena.setColumns(10);
 		contrasena.setBounds(159, 328, 355, 61);
 		panel_derecho.add(contrasena);
-		
+
 		JButton btnIngresar = new JButton("INGRESAR");
 		btnIngresar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -126,14 +127,15 @@ public class inicio {
 						String user = usuario.getText();
 						String pass = contrasena.getText();
 						
-						ResultSet resultSet = statement.executeQuery("select id_usuario from usuario where user='"+user+"' AND pass='"+pass+"' ;");
+						ResultSet resultSet = statement.executeQuery("select id_permiso,nombres from usuario where user='"+user+"' AND pass='"+pass+"' ;");
+ 
+					
 						
-						if(resultSet.next() ==  true) {
+						if(resultSet.next() ==  true) {							
 							txtrIngresaTusCredenciales.setText("USUARIO VALIDADO");
 							administrador window2 = new administrador();
 							window2.administrador.setVisible(true);
-							inicio.dispose();
-							//inicio.setVisible(false);
+							inicio.dispose();				
 						}
 						
 						conexion.close();
