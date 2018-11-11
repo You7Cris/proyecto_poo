@@ -129,10 +129,11 @@ public class inicio {
 						ResultSet resultSet = statement.executeQuery("select id_usuario from usuario where user='"+user+"' AND pass='"+pass+"' ;");
 						
 						if(resultSet.next() ==  true) {
-							//txtrIngresaTusCredenciales.setText("USUARIO VALIDADO");
-							administrador nuevaVentanaAdministradorInicio = new administrador();
-							nuevaVentanaAdministradorInicio.setVisible(true);
-							inicio.this.dispose();
+							txtrIngresaTusCredenciales.setText("USUARIO VALIDADO");
+							administrador window2 = new administrador();
+							window2.administrador.setVisible(true);
+							inicio.dispose();
+							//inicio.setVisible(false);
 						}
 						
 						conexion.close();
