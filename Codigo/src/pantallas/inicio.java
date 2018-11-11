@@ -1,5 +1,7 @@
 package pantallas;
 
+
+
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -18,10 +20,13 @@ import java.awt.FlowLayout;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import javax.swing.JButton;
+import javax.swing.JTextField;
 
 public class inicio {
 
 	private JFrame frame;
+	private JTextField usuario;
+	private JTextField contrasena;
 
 	/**
 	 * Launch the application.
@@ -86,18 +91,25 @@ public class inicio {
 		frame.getContentPane().add(panel_derecho);
 		panel_derecho.setLayout(null);
 		
-		JPanel panelUsuario = new JPanel();
-		panelUsuario.setBounds(145, 238, 378, 57);
-		panel_derecho.add(panelUsuario);
+		usuario = new JTextField();
+		usuario.setHorizontalAlignment(SwingConstants.CENTER);
+		usuario.setText("usuario");
+		usuario.setBounds(159, 236, 355, 61);
+		panel_derecho.add(usuario);
+		usuario.setColumns(10);
 		
-		JPanel panelContrasena = new JPanel();
-		panelContrasena.setBounds(145, 329, 378, 57);
-		panel_derecho.add(panelContrasena);
+		contrasena = new JTextField();
+		contrasena.setHorizontalAlignment(SwingConstants.CENTER);
+		contrasena.setText("contrase\u00F1a");
+		contrasena.setColumns(10);
+		contrasena.setBounds(159, 328, 355, 61);
+		panel_derecho.add(contrasena);
 		
 		JButton btnIngresar = new JButton("INGRESAR");
-		btnIngresar.setForeground(new Color(58,177,155));
-		btnIngresar.setBounds(288, 455, 89, 23);
+		btnIngresar.setForeground(Color.WHITE);
+		btnIngresar.setBounds(260, 455, 147, 37);
 		btnIngresar.setBackground(new Color(58,177,155));
 		panel_derecho.add(btnIngresar);
 	}
 }
+
