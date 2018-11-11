@@ -8,6 +8,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JMenu;
 import java.awt.Font;
+import javax.swing.JLabel;
 
 public class administrador {
 

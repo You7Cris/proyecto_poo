@@ -29,6 +29,8 @@ import javax.swing.JButton;
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 public class inicio {
 
@@ -62,6 +64,7 @@ public class inicio {
 	/**
 	 * Initialize the contents of the frame.
 	 */
+	
 	private void initialize() {
 		inicio = new JFrame();
 		inicio.setTitle("Iniciar sesion");
@@ -101,6 +104,13 @@ public class inicio {
 		panel_derecho.setLayout(null);
 		
 		usuario = new JTextField();
+		usuario.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent arg0) {
+				usuario.setText("");
+				contrasena.setText("");
+			}
+		});
 		usuario.setHorizontalAlignment(SwingConstants.CENTER);
 		usuario.setText("usuario");
 		usuario.setBounds(159, 236, 355, 61);
@@ -122,26 +132,43 @@ public class inicio {
 					java.sql.Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/poo3","root","");
 					
 					Statement statement = conexion.createStatement();
+					boolean validacion=false;
+					String id_permiso_consulta=""; 
 					
 					if(conexion != null) {
 						String user = usuario.getText();
 						String pass = contrasena.getText();
 						
-						ResultSet resultSet = statement.executeQuery("select id_permiso,nombres from usuario where user='"+user+"' AND pass='"+pass+"' ;");
- 
-					
 						
-						if(resultSet.next() ==  true) {							
-							txtrIngresaTusCredenciales.setText("USUARIO VALIDADO");
-							administrador window2 = new administrador();
-							window2.administrador.setVisible(true);
-							inicio.dispose();				
+						//busca al usuario y si lo encuentra validacion es verdadera.
+						ResultSet resultSet =statement.executeQuery("select id_permiso from usuario where user='"+user+"' AND pass='"+pass+"' ;");
+						if(resultSet.next() ==  true){validacion=true;};
+						ResultSetMetaData rsmd = (ResultSetMetaData) resultSet.getMetaData();
+				    	id_permiso_consulta=resultSet.getString(1);
+				    	conexion.close();
+						
+						
+						
+						
+						if(validacion) {
+							//Redirige a JFrame de Administrador
+								if(id_permiso_consulta.equals("1")) {
+									administrador window2 = new administrador();
+									window2.administrador.setVisible(true);
+									inicio.dispose();												
+								}
+							//Redirige a JFrame de vendedor
+								if(id_permiso_consulta.equals("2")) {
+									vendedor window = new vendedor();
+									window.vendedor.setVisible(true);
+									inicio.dispose();												
+								}
+							//Esta por definir el rol del cliente. SI se le da usuario o no, la verdad no le vea necesidad del usuario a cliente
+							//si se decide por darle usuario al cliente se tendría que cambiar el modelo de la base de datos para su vinculacion 
+							//a los diferentes datos que este necesita.
+						}else {
+							txtrIngresaTusCredenciales.setText("USUARIO O CONTRASEÑA INCORRECTOS");
 						}
-						
-						conexion.close();
-	
-					}else {
-						txtrIngresaTusCredenciales.setText("USUARIO O CONTRASEÑA INCORRECTOS");
 					}
 					
 				} catch(ClassNotFoundException o) {
