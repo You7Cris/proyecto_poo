@@ -32,13 +32,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import javax.swing.JPasswordField;
+import javax.swing.DropMode;
 
 public class inicio {
 
 	JFrame inicio;
 	private JTextField usuario;
 	private JTextField contrasena;
-	private JPasswordField contrasena2;
 
 	/**
 	 * Launch the application.
@@ -83,6 +83,7 @@ public class inicio {
 		panel_izquierdo.setLayout(null);
 		
 		JLabel lblBienvenidoDeNuevo = new JLabel("Bienvenido de nuevo!");
+		lblBienvenidoDeNuevo.setHorizontalAlignment(SwingConstants.CENTER);
 		lblBienvenidoDeNuevo.setBounds(87, 238, 460, 52);
 		lblBienvenidoDeNuevo.setFont(new Font("Roboto", Font.BOLD, 44));
 		lblBienvenidoDeNuevo.setForeground(Color.WHITE);
@@ -179,6 +180,7 @@ public class inicio {
 							//a los diferentes datos que este necesita.
 						}else {
 							txtrIngresaTusCredenciales.setText("USUARIO O CONTRASEÑA INCORRECTOS");
+							txtrIngresaTusCredenciales.setForeground(Color.RED);
 						}
 					}
 					
