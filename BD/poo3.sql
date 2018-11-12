@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 12-11-2018 a las 23:31:01
+-- Tiempo de generación: 12-11-2018 a las 23:34:45
 -- Versión del servidor: 10.1.31-MariaDB
 -- Versión de PHP: 5.6.34
 
@@ -290,7 +290,10 @@ CREATE TABLE `usuario_tienda` (
 --
 
 INSERT INTO `usuario_tienda` (`id_usuario_tienda`, `id_usuario`, `id_tienda`) VALUES
-(1, 1, 1);
+(1, 1, 1),
+(2, 2, 1),
+(3, 3, 1),
+(4, 4, 1);
 
 --
 -- Índices para tablas volcadas
@@ -440,7 +443,7 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `usuario_tienda`
 --
 ALTER TABLE `usuario_tienda`
-  MODIFY `id_usuario_tienda` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_usuario_tienda` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Restricciones para tablas volcadas
