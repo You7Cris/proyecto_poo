@@ -9,6 +9,9 @@ import javax.swing.JMenuItem;
 import javax.swing.JMenu;
 import java.awt.Font;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTable;
+import javax.swing.SwingConstants;
 
 public class administrador {
 
@@ -49,23 +52,17 @@ public class administrador {
 		administrador.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		administrador.getContentPane().setLayout(null);
 		
-		JMenuBar menuSuperior = new JMenuBar();
-		administrador.setJMenuBar(menuSuperior);
+		JPanel funciones = new JPanel();
+		funciones.setBackground(Color.WHITE);
+		funciones.setForeground(Color.WHITE);
+		funciones.setBounds(0, 0, 1264, 681);
+		administrador.getContentPane().add(funciones);
+		funciones.setLayout(null);
 		
-		JMenu dropGestion = new JMenu("Gestion");
-		dropGestion.setFont(new Font("Roboto", Font.BOLD, 20));
-		menuSuperior.add(dropGestion);
-		
-		JMenuItem artistas = new JMenuItem("Artistas");
-		dropGestion.add(artistas);
-		
-		JMenuItem canciones = new JMenuItem("Canciones");
-		dropGestion.add(canciones);
-		
-		JMenuItem generos = new JMenuItem("Generos");
-		dropGestion.add(generos);
-		
-		JMenuItem disquera = new JMenuItem("Disquera");
-		dropGestion.add(disquera);
+		JLabel lblArtistas = new JLabel("Artistas");
+		lblArtistas.setFont(new Font("Roboto", Font.BOLD, 20));
+		lblArtistas.setHorizontalAlignment(SwingConstants.CENTER);
+		lblArtistas.setBounds(54, 82, 258, 230);
+		funciones.add(lblArtistas);
 	}
 }
