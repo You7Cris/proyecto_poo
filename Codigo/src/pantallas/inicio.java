@@ -157,6 +157,8 @@ public class inicio {
 						
 						
 						if(validacion) {
+							//no crear más JFrames a parte de estos dos, usar paneles para cambiar lo que muestran (Mucho más facil)
+							
 							//Redirige a JFrame de Administrador
 								if(id_permiso_consulta.equals("1")) {
 									administrador window2 = new administrador(id_usuario);
