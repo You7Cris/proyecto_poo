@@ -79,7 +79,7 @@ public class administrador {
     } 
 	private void initialize(String id_usuario) {
 		administrador = new JFrame();
-		administrador.setTitle("Inicio Administrador");
+		administrador.setTitle("");
 		administrador.getContentPane().setBackground(Color.WHITE);
 		administrador.setResizable(false);
 		administrador.setBounds(100, 100, 1280, 720);
@@ -161,24 +161,17 @@ public class administrador {
 
 		
 		funciones.add(eliminarCuenta);
-		
-		JMenuBar menuBar = new JMenuBar();
-		menuBar.setForeground(Color.RED);
-		menuBar.setBackground(Color.RED);
-		menuBar.setBounds(0, 0, 1285, 75);
-		funciones.add(menuBar);
 		int id_permiso=0;
-		JMenuItem mntmNombreDelAdministrador = new JMenuItem("");
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			java.sql.Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/poo3","root","");
 			Statement statement = conexion.createStatement();
-			if(conexion != null & id_usuario!=null) {		
+			if(conexion != null & id_usuario.length() != 0) {		
 				ResultSet resultSet =statement.executeQuery("select nombres,id_permiso from usuario where id_usuario='"+id_usuario+"';");
 				
 				resultSet.next();
 				ResultSetMetaData rsmd = (ResultSetMetaData) resultSet.getMetaData();
-		    	mntmNombreDelAdministrador.setText(resultSet.getString(1));
+		    	administrador.setTitle("Bienvenido "+resultSet.getString(1));
 		    	id_permiso = Integer.parseInt(resultSet.getString(2));
 		    	conexion.close();						
 				
@@ -196,14 +189,11 @@ public class administrador {
 		
 		if(id_permiso!=1) {												
 			administrador.dispose();
+			administrador.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 			administrador=null;
 			inicio window = new inicio();
 			window.inicio.setVisible(true);
 		}
-		menuBar.add(mntmNombreDelAdministrador);
 		
-		JMenuItem mntmCerrarSesion = new JMenuItem("Cerrar sesion");
-		mntmCerrarSesion.setBackground(Color.WHITE);
-		menuBar.add(mntmCerrarSesion);
 	}
 }
