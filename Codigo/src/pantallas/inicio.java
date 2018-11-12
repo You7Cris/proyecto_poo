@@ -146,6 +146,7 @@ public class inicio {
 						
 						
 						//busca al usuario y si lo encuentra validacion es verdadera.
+						//resultSet es como un vector que comienza desde uno, en donde la primera posición es id_permiso etc.
 						ResultSet resultSet =statement.executeQuery("select id_permiso,id_usuario from usuario where user='"+user+"' AND pass='"+pass+"' ;");
 						if(resultSet.next() ==  true){validacion=true;};
 						ResultSetMetaData rsmd = (ResultSetMetaData) resultSet.getMetaData();
