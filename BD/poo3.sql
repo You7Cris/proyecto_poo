@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 11-11-2018 a las 20:52:34
+-- Tiempo de generación: 12-11-2018 a las 23:31:01
 -- Versión del servidor: 10.1.31-MariaDB
 -- Versión de PHP: 5.6.34
 
@@ -273,6 +273,25 @@ INSERT INTO `usuario` (`id_usuario`, `nombres`, `user`, `pass`, `id_permiso`) VA
 (3, 'Steven Gonzales', 'steven', '123', 1),
 (4, 'Benito Camelas', 'vendedor', '123', 2);
 
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `usuario_tienda`
+--
+
+CREATE TABLE `usuario_tienda` (
+  `id_usuario_tienda` int(10) NOT NULL,
+  `id_usuario` int(10) NOT NULL,
+  `id_tienda` int(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `usuario_tienda`
+--
+
+INSERT INTO `usuario_tienda` (`id_usuario_tienda`, `id_usuario`, `id_tienda`) VALUES
+(1, 1, 1);
+
 --
 -- Índices para tablas volcadas
 --
@@ -346,6 +365,14 @@ ALTER TABLE `usuario`
   ADD KEY `id_permiso` (`id_permiso`);
 
 --
+-- Indices de la tabla `usuario_tienda`
+--
+ALTER TABLE `usuario_tienda`
+  ADD PRIMARY KEY (`id_usuario_tienda`),
+  ADD KEY `id_usuario` (`id_usuario`),
+  ADD KEY `id_tienda` (`id_tienda`);
+
+--
 -- AUTO_INCREMENT de las tablas volcadas
 --
 
@@ -410,6 +437,12 @@ ALTER TABLE `usuario`
   MODIFY `id_usuario` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
+-- AUTO_INCREMENT de la tabla `usuario_tienda`
+--
+ALTER TABLE `usuario_tienda`
+  MODIFY `id_usuario_tienda` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- Restricciones para tablas volcadas
 --
 
@@ -440,6 +473,13 @@ ALTER TABLE `inventario_cancion`
 --
 ALTER TABLE `usuario`
   ADD CONSTRAINT `usuario_ibfk_1` FOREIGN KEY (`id_permiso`) REFERENCES `permiso` (`id_permiso`);
+
+--
+-- Filtros para la tabla `usuario_tienda`
+--
+ALTER TABLE `usuario_tienda`
+  ADD CONSTRAINT `usuario_tienda_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`),
+  ADD CONSTRAINT `usuario_tienda_ibfk_2` FOREIGN KEY (`id_tienda`) REFERENCES `tienda` (`id_tienda`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
