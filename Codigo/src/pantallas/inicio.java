@@ -32,13 +32,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import javax.swing.JPasswordField;
+import javax.swing.DropMode;
 
 public class inicio {
 
-	private JFrame inicio;
+	JFrame inicio;
 	private JTextField usuario;
 	private JTextField contrasena;
-	private JPasswordField contrasena2;
 
 	/**
 	 * Launch the application.
@@ -83,6 +83,7 @@ public class inicio {
 		panel_izquierdo.setLayout(null);
 		
 		JLabel lblBienvenidoDeNuevo = new JLabel("Bienvenido de nuevo!");
+		lblBienvenidoDeNuevo.setHorizontalAlignment(SwingConstants.CENTER);
 		lblBienvenidoDeNuevo.setBounds(87, 238, 460, 52);
 		lblBienvenidoDeNuevo.setFont(new Font("Roboto", Font.BOLD, 44));
 		lblBienvenidoDeNuevo.setForeground(Color.WHITE);
@@ -137,7 +138,8 @@ public class inicio {
 					
 					Statement statement = conexion.createStatement();
 					boolean validacion=false;
-					String id_permiso_consulta=""; 
+					String id_permiso_consulta="";
+					String id_usuario="";
 					
 					if(conexion != null) {
 						String user = usuario.getText();
@@ -145,19 +147,25 @@ public class inicio {
 						
 						
 						//busca al usuario y si lo encuentra validacion es verdadera.
-						ResultSet resultSet =statement.executeQuery("select id_permiso from usuario where user='"+user+"' AND pass='"+pass+"' ;");
-						if(resultSet.next() ==  true){validacion=true;};
-						ResultSetMetaData rsmd = (ResultSetMetaData) resultSet.getMetaData();
-				    	id_permiso_consulta=resultSet.getString(1);
+						//resultSet es como un vector que comienza desde uno, en donde la primera posición es id_permiso etc.
+						ResultSet resultSet =statement.executeQuery("select id_permiso,id_usuario from usuario where user='"+user+"' AND pass='"+pass+"' ;");
+						if(resultSet.next() ==  true){
+							validacion=true;
+							ResultSetMetaData rsmd = (ResultSetMetaData) resultSet.getMetaData();
+							id_permiso_consulta=resultSet.getString(1);
+							id_usuario=resultSet.getString(2);
+						};
 				    	conexion.close();
 						
 						
 						
 						
 						if(validacion) {
+							//no crear más JFrames a parte de estos dos, usar paneles para cambiar lo que muestran (Mucho más facil)
+							
 							//Redirige a JFrame de Administrador
 								if(id_permiso_consulta.equals("1")) {
-									administrador window2 = new administrador();
+									administrador window2 = new administrador(id_usuario);
 									window2.administrador.setVisible(true);
 									inicio.dispose();												
 								}
@@ -172,6 +180,7 @@ public class inicio {
 							//a los diferentes datos que este necesita.
 						}else {
 							txtrIngresaTusCredenciales.setText("USUARIO O CONTRASEÑA INCORRECTOS");
+							txtrIngresaTusCredenciales.setForeground(Color.RED);
 						}
 					}
 					
