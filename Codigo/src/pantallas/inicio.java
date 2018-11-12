@@ -31,12 +31,14 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import javax.swing.JPasswordField;
 
 public class inicio {
 
 	private JFrame inicio;
 	private JTextField usuario;
 	private JTextField contrasena;
+	private JPasswordField contrasena2;
 
 	/**
 	 * Launch the application.
@@ -117,7 +119,9 @@ public class inicio {
 		panel_derecho.add(usuario);
 		usuario.setColumns(10);
 		
-		contrasena = new JTextField();
+
+		contrasena = new JPasswordField();
+		contrasena.setBounds(159, 328, 355, 61);
 		contrasena.setHorizontalAlignment(SwingConstants.CENTER);
 		contrasena.setText("contrase\u00F1a");
 		contrasena.setColumns(10);
@@ -184,6 +188,7 @@ public class inicio {
 		btnIngresar.setBounds(260, 455, 147, 37);
 		btnIngresar.setBackground(new Color(58,177,155));
 		panel_derecho.add(btnIngresar);
+		
 	}
 }
 
