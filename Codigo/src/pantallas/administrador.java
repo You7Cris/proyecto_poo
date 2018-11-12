@@ -167,30 +167,22 @@ public class administrador {
 		menuBar.setBackground(Color.RED);
 		menuBar.setBounds(0, 0, 1285, 75);
 		funciones.add(menuBar);
-		
+		int id_permiso=0;
 		JMenuItem mntmNombreDelAdministrador = new JMenuItem("");
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			java.sql.Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/poo3","root","");
 			Statement statement = conexion.createStatement();
-			
-			int n_id_usuario = Integer.parseInt(id_usuario);
-			
-			if(conexion != null) {		
-				ResultSet resultSet =statement.executeQuery("select nombres from usuario where id_usuario='"+n_id_usuario+"';");
+			if(conexion != null & id_usuario!=null) {		
+				ResultSet resultSet =statement.executeQuery("select nombres,id_permiso from usuario where id_usuario='"+id_usuario+"';");
 				
 				resultSet.next();
 				ResultSetMetaData rsmd = (ResultSetMetaData) resultSet.getMetaData();
 		    	mntmNombreDelAdministrador.setText(resultSet.getString(1));
+		    	id_permiso = Integer.parseInt(resultSet.getString(2));
 		    	conexion.close();						
 				
-				//if(validacion) {
-						//if(id_permiso_consulta.equals("1")) {
-						//	administrador window2 = new administrador(id_usuario);
-						//	window2.administrador.setVisible(true);
-							//inicio.dispose();												
-					//	}
-				//}
+
 			}
 			
 		} catch(ClassNotFoundException o) {
@@ -199,6 +191,14 @@ public class administrador {
 		} catch (SQLException l) {
 			// TODO Auto-generated catch block
 			l.printStackTrace();					
+		}
+		
+		
+		if(id_permiso!=1) {												
+			administrador.dispose();
+			administrador=null;
+			inicio window = new inicio();
+			window.inicio.setVisible(true);
 		}
 		menuBar.add(mntmNombreDelAdministrador);
 		

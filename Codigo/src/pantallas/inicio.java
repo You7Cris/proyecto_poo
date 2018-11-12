@@ -35,7 +35,7 @@ import javax.swing.JPasswordField;
 
 public class inicio {
 
-	private JFrame inicio;
+	JFrame inicio;
 	private JTextField usuario;
 	private JTextField contrasena;
 	private JPasswordField contrasena2;
