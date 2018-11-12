@@ -90,6 +90,7 @@ public class administrador {
 		panelCrearCuenta.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
+				panelCrearCuenta.setVisible(false);
 			}
 		});
 		panelCrearCuenta.setBounds(0, 0, 1264, 681);
