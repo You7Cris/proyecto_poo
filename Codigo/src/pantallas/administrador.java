@@ -25,8 +25,15 @@ import java.awt.event.ActionEvent;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.border.LineBorder;
+
+import com.mysql.jdbc.ResultSetMetaData;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 
@@ -41,7 +48,7 @@ public class administrador {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					administrador window = new administrador();
+					administrador window = new administrador("");
 					window.administrador.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -53,8 +60,8 @@ public class administrador {
 	/**
 	 * Create the application.
 	 */
-	public administrador() {
-		initialize();
+	public administrador(String id_usuario) {
+		initialize(id_usuario);
 	}
 
 	/**
@@ -70,7 +77,7 @@ public class administrador {
     void text() 
     { 
     } 
-	private void initialize() {
+	private void initialize(String id_usuario) {
 		administrador = new JFrame();
 		administrador.setTitle("Inicio Administrador");
 		administrador.getContentPane().setBackground(Color.WHITE);
@@ -80,8 +87,8 @@ public class administrador {
 		administrador.getContentPane().setLayout(null);
 		
 		JPanel funciones = new JPanel();
-		funciones.setBackground(Color.WHITE);
-		funciones.setForeground(Color.WHITE);
+		funciones.setBackground(new Color(244, 248, 247));
+		funciones.setForeground(Color.GREEN);
 		funciones.setBounds(0, 0, 1264, 681);
 		administrador.getContentPane().add(funciones);
 		funciones.setLayout(null);
@@ -94,12 +101,15 @@ public class administrador {
 			@Override
 			public void mouseEntered(MouseEvent arg0) {
 				crearCuenta.setBorder(new LineBorder(new Color(192, 192, 192), 2));
+				
 			}
 			@Override
 			public void mouseExited(MouseEvent arg0) {
 				crearCuenta.setBorder(new LineBorder(new Color(230, 230, 230), 1));
 			}
 		});
+		crearCuenta.setBackground(Color.WHITE);
+		crearCuenta.setOpaque(true);
 		crearCuenta.setFont(new Font("Roboto", Font.BOLD, 20));
 		crearCuenta.setHorizontalAlignment(SwingConstants.CENTER);
 		crearCuenta.setBorder(new LineBorder(new Color(230, 230, 230), 1));
@@ -120,6 +130,8 @@ public class administrador {
 				modificarCuenta.setBorder(new LineBorder(new Color(230, 230, 230), 1));
 			}
 		});
+		modificarCuenta.setBackground(Color.WHITE);
+		modificarCuenta.setOpaque(true);
 		modificarCuenta.setHorizontalAlignment(SwingConstants.CENTER);
 		modificarCuenta.setFont(new Font("Roboto", Font.BOLD, 20));
 		modificarCuenta.setBorder(new LineBorder(new Color(230, 230, 230), 1));
@@ -140,6 +152,8 @@ public class administrador {
 				eliminarCuenta.setBorder(new LineBorder(new Color(230, 230, 230), 1));
 			}
 		});
+		eliminarCuenta.setBackground(Color.WHITE);
+		eliminarCuenta.setOpaque(true);
 		eliminarCuenta.setHorizontalAlignment(SwingConstants.CENTER);
 		eliminarCuenta.setFont(new Font("Roboto", Font.BOLD, 20));
 		eliminarCuenta.setBorder(new LineBorder(new Color(230, 230, 230), 1));
@@ -147,5 +161,49 @@ public class administrador {
 
 		
 		funciones.add(eliminarCuenta);
+		
+		JMenuBar menuBar = new JMenuBar();
+		menuBar.setForeground(Color.RED);
+		menuBar.setBackground(Color.RED);
+		menuBar.setBounds(0, 0, 1285, 75);
+		funciones.add(menuBar);
+		
+		JMenuItem mntmNombreDelAdministrador = new JMenuItem("");
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			java.sql.Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/poo3","root","");
+			Statement statement = conexion.createStatement();
+			
+			int n_id_usuario = Integer.parseInt(id_usuario);
+			
+			if(conexion != null) {		
+				ResultSet resultSet =statement.executeQuery("select nombres from usuario where id_usuario='"+n_id_usuario+"';");
+				
+				resultSet.next();
+				ResultSetMetaData rsmd = (ResultSetMetaData) resultSet.getMetaData();
+		    	mntmNombreDelAdministrador.setText(resultSet.getString(1));
+		    	conexion.close();						
+				
+				//if(validacion) {
+						//if(id_permiso_consulta.equals("1")) {
+						//	administrador window2 = new administrador(id_usuario);
+						//	window2.administrador.setVisible(true);
+							//inicio.dispose();												
+					//	}
+				//}
+			}
+			
+		} catch(ClassNotFoundException o) {
+			// TODO Auto-generated catch block
+			o.printStackTrace();
+		} catch (SQLException l) {
+			// TODO Auto-generated catch block
+			l.printStackTrace();					
+		}
+		menuBar.add(mntmNombreDelAdministrador);
+		
+		JMenuItem mntmCerrarSesion = new JMenuItem("Cerrar sesion");
+		mntmCerrarSesion.setBackground(Color.WHITE);
+		menuBar.add(mntmCerrarSesion);
 	}
 }
