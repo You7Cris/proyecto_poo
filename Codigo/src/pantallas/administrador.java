@@ -89,8 +89,6 @@ public class administrador {
 		
 		JPanel funciones = new JPanel();
 		JPanel panelCrearCuenta = new JPanel();
-		JScrollPane scrollVentana;
-		
 		
 		
 		
@@ -160,6 +158,7 @@ public class administrador {
 		eliminarCuenta.setBorder(new LineBorder(new Color(230, 230, 230), 1));
 		eliminarCuenta.setBounds(774, 152, 258, 230);	
 		funciones.add(eliminarCuenta);
+		
 		
 		
 		
