@@ -25,8 +25,11 @@ import java.awt.event.ActionEvent;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.border.LineBorder;
+import javax.swing.table.TableModel;
 
 import com.mysql.jdbc.ResultSetMetaData;
+
+import net.proteanit.sql.DbUtils;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -39,6 +42,8 @@ import java.awt.event.FocusEvent;
 import javax.swing.JSeparator;
 
 public class administrador {
+
+	private static final TableModel DBUtils = null;
 
 	JFrame administrador;
 
@@ -73,6 +78,7 @@ public class administrador {
   
     // label to diaplay text 
     static JLabel l; 
+    private JTable tableUsuario;
   
     // default constructor 
     void text() 
@@ -86,6 +92,7 @@ public class administrador {
 		administrador.setBounds(100, 100, 1280, 720);
 		administrador.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		administrador.getContentPane().setLayout(null);
+
 		
 		JPanel funciones = new JPanel();
 		JPanel panelCrearCuenta = new JPanel();
@@ -99,7 +106,7 @@ public class administrador {
 		funciones.setBounds(0, 0, 1264, 681);
 		administrador.getContentPane().add(funciones);
 		funciones.setLayout(null);
-			
+		
 		
 		JLabel nombreTienda = new JLabel("");
 		nombreTienda.setFont(new Font("Tahoma", Font.BOLD, 25));
@@ -125,23 +132,23 @@ public class administrador {
 		
 		
 		
-		JLabel crearCuenta = new JLabel("Crear cuentas");
-		crearCuenta.addMouseListener(new MouseAdapter() {
+		JLabel verCuentas = new JLabel("Ver cuentas");
+		verCuentas.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				funciones.setVisible(false);
 				panelCrearCuenta.setVisible(true);
 			}
 		});
-		crearCuenta.setBackground(Color.WHITE);
-		crearCuenta.setOpaque(true);
-		crearCuenta.setFont(new Font("Roboto", Font.BOLD, 20));
-		crearCuenta.setHorizontalAlignment(SwingConstants.CENTER);
-		crearCuenta.setBorder(new LineBorder(new Color(230, 230, 230), 1));
-		crearCuenta.setBounds(258, 152, 258, 230);
-		funciones.add(crearCuenta);
+		verCuentas.setBackground(Color.WHITE);
+		verCuentas.setOpaque(true);
+		verCuentas.setFont(new Font("Roboto", Font.BOLD, 20));
+		verCuentas.setHorizontalAlignment(SwingConstants.CENTER);
+		verCuentas.setBorder(new LineBorder(new Color(230, 230, 230), 1));
+		verCuentas.setBounds(258, 152, 258, 230);
+		funciones.add(verCuentas);
 		
-		JLabel modificarCuenta = new JLabel("Modificar cuentas");
+		JLabel modificarCuenta = new JLabel("Modificar cuenta");
 		modificarCuenta.setBackground(Color.WHITE);
 		modificarCuenta.setOpaque(true);
 		modificarCuenta.setHorizontalAlignment(SwingConstants.CENTER);
@@ -158,6 +165,7 @@ public class administrador {
 		eliminarCuenta.setBorder(new LineBorder(new Color(230, 230, 230), 1));
 		eliminarCuenta.setBounds(774, 152, 258, 230);	
 		funciones.add(eliminarCuenta);
+
 		
 		
 		
@@ -175,6 +183,24 @@ public class administrador {
 		panelCrearCuenta.setBounds(0, 0, 1264, 681);
 		administrador.getContentPane().add(panelCrearCuenta);
 		panelCrearCuenta.setBackground(Color.RED);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		panelCrearCuenta.add(scrollPane);
+		
+		tableUsuario = new JTable();
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			java.sql.Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/poo3","root","");
+			Statement statement = conexion.createStatement();
+			if(conexion != null & id_usuario.length() != 0) {		
+				ResultSet resultSet =statement.executeQuery("select id_usuario,nombres,user,descripcion from usuario INNER JOIN permiso ON usuario.id_usuario=permiso.id_permiso;");				
+				//ResultSet resultSet =statement.executeQuery("select * from eps;");				
+				tableUsuario.setModel(DbUtils.resultSetToTableModel(resultSet));
+				conexion.close();						
+			}
+			
+		} catch(ClassNotFoundException o) {o.printStackTrace();	} catch (SQLException l) {l.printStackTrace();}
+		scrollPane.setViewportView(tableUsuario);
 		
 		
 		
