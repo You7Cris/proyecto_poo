@@ -36,6 +36,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import javax.swing.JSeparator;
 
 public class administrador {
 
@@ -86,56 +87,21 @@ public class administrador {
 		administrador.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		administrador.getContentPane().setLayout(null);
 		
-		JPanel panelCrearCuenta = new JPanel();
-		panelCrearCuenta.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				panelCrearCuenta.setVisible(false);
-			}
-		});
-		panelCrearCuenta.setBounds(0, 0, 1264, 681);
-		administrador.getContentPane().add(panelCrearCuenta);
-		panelCrearCuenta.setBackground(Color.RED);
-		panelCrearCuenta.setVisible(false);
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		JPanel funciones = new JPanel();
+		JPanel panelCrearCuenta = new JPanel();
+		JScrollPane scrollVentana;
+		
+		
+		
+		
+		
+		
 		funciones.setBackground(new Color(244, 248, 247));
 		funciones.setForeground(Color.GREEN);
 		funciones.setBounds(0, 0, 1264, 681);
 		administrador.getContentPane().add(funciones);
 		funciones.setLayout(null);
 			
-		JLabel crearCuenta = new JLabel("Crear cuentas");
-		crearCuenta.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				panelCrearCuenta.setVisible(true);
-			}
-			@Override
-			public void mouseEntered(MouseEvent arg0) {
-				crearCuenta.setBorder(new LineBorder(new Color(192, 192, 192), 2));
-				
-			}
-			@Override
-			public void mouseExited(MouseEvent arg0) {
-				crearCuenta.setBorder(new LineBorder(new Color(230, 230, 230), 1));
-			}
-		});
 		
 		JLabel nombreTienda = new JLabel("");
 		nombreTienda.setFont(new Font("Tahoma", Font.BOLD, 25));
@@ -152,13 +118,23 @@ public class administrador {
 				resultSet.next();
 				ResultSetMetaData rsmd = (ResultSetMetaData) resultSet.getMetaData();
 				nombreTienda.setText("Tienda:  "+resultSet.getString(1).toUpperCase());
-		    	conexion.close();						
+				conexion.close();						
 			}
 			
 		} catch(ClassNotFoundException o) {o.printStackTrace();	} catch (SQLException l) {l.printStackTrace();}
 		funciones.add(nombreTienda);
 		
 		
+		
+		
+		JLabel crearCuenta = new JLabel("Crear cuentas");
+		crearCuenta.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				funciones.setVisible(false);
+				panelCrearCuenta.setVisible(true);
+			}
+		});
 		crearCuenta.setBackground(Color.WHITE);
 		crearCuenta.setOpaque(true);
 		crearCuenta.setFont(new Font("Roboto", Font.BOLD, 20));
@@ -168,19 +144,6 @@ public class administrador {
 		funciones.add(crearCuenta);
 		
 		JLabel modificarCuenta = new JLabel("Modificar cuentas");
-		modificarCuenta.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-			}
-			@Override
-			public void mouseEntered(MouseEvent arg0) {
-				modificarCuenta.setBorder(new LineBorder(new Color(192, 192, 192), 2));
-			}
-			@Override
-			public void mouseExited(MouseEvent arg0) {
-				modificarCuenta.setBorder(new LineBorder(new Color(230, 230, 230), 1));
-			}
-		});
 		modificarCuenta.setBackground(Color.WHITE);
 		modificarCuenta.setOpaque(true);
 		modificarCuenta.setHorizontalAlignment(SwingConstants.CENTER);
@@ -190,19 +153,6 @@ public class administrador {
 		funciones.add(modificarCuenta);
 		
 		JLabel eliminarCuenta = new JLabel("Eliminar cuentas");
-		eliminarCuenta.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-			}
-			@Override
-			public void mouseEntered(MouseEvent arg0) {
-				eliminarCuenta.setBorder(new LineBorder(new Color(192, 192, 192), 2));
-			}
-			@Override
-			public void mouseExited(MouseEvent arg0) {
-				eliminarCuenta.setBorder(new LineBorder(new Color(230, 230, 230), 1));
-			}
-		});
 		eliminarCuenta.setBackground(Color.WHITE);
 		eliminarCuenta.setOpaque(true);
 		eliminarCuenta.setHorizontalAlignment(SwingConstants.CENTER);
@@ -210,6 +160,25 @@ public class administrador {
 		eliminarCuenta.setBorder(new LineBorder(new Color(230, 230, 230), 1));
 		eliminarCuenta.setBounds(774, 152, 258, 230);	
 		funciones.add(eliminarCuenta);
+		
+		
+		
+		
+		
+		
+		panelCrearCuenta.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				panelCrearCuenta.setVisible(false);
+				funciones.setVisible(true);
+			}
+		});
+		panelCrearCuenta.setBounds(0, 0, 1264, 681);
+		administrador.getContentPane().add(panelCrearCuenta);
+		panelCrearCuenta.setBackground(Color.RED);
+		
+		
+		
 		int id_permiso=0;
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
