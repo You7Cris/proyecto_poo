@@ -37,13 +37,15 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import javax.swing.JSeparator;
+import javax.swing.JTextField;
+import javax.swing.JButton;
 
 public class administrador {
-
-	private static final TableModel DBUtils = null;
 
 	JFrame administrador;
 
@@ -79,6 +81,9 @@ public class administrador {
     // label to diaplay text 
     static JLabel l; 
     private JTable tableUsuario;
+    private JTextField nuevoNombre;
+    private JTextField nuevoUsuario;
+    private JTextField nuevoContrasena;
   
     // default constructor 
     void text() 
@@ -95,7 +100,98 @@ public class administrador {
 
 		
 		JPanel funciones = new JPanel();
-		JPanel panelCrearCuenta = new JPanel();
+		JPanel panelGestionCuentas = new JPanel();
+		
+				
+				
+				
+				
+				
+				
+				
+				panelGestionCuentas.setBounds(0, 0, 1264, 681);
+				administrador.getContentPane().add(panelGestionCuentas);
+				
+						panelGestionCuentas.setBackground(new Color(244, 248, 247));
+						panelGestionCuentas.setLayout(null);
+						
+						JScrollPane scrollPane = new JScrollPane();
+						scrollPane.setBounds(584, 28, 646, 598);
+						panelGestionCuentas.add(scrollPane);
+						
+						tableUsuario = new JTable();
+						scrollPane.setViewportView(tableUsuario);
+						
+						JLabel lblRegistrarUsuario = new JLabel("Registrar usuario");
+						lblRegistrarUsuario.setBounds(47, 60, 191, 53);
+						lblRegistrarUsuario.setHorizontalAlignment(SwingConstants.CENTER);
+						lblRegistrarUsuario.setFont(new Font("Roboto", Font.BOLD, 20));
+						panelGestionCuentas.add(lblRegistrarUsuario);
+						
+						nuevoNombre = new JTextField();
+						nuevoNombre.setText("Nombre completo");
+						nuevoNombre.setBounds(106, 126, 248, 35);
+						nuevoNombre.addFocusListener(new FocusAdapter() {
+							@Override
+							public void focusGained(FocusEvent arg0) {
+								nuevoNombre.setText("");
+							}
+						});
+						panelGestionCuentas.add(nuevoNombre);
+						nuevoNombre.setColumns(10);
+						
+						nuevoUsuario = new JTextField();
+						nuevoUsuario.setText("Usuario");
+						nuevoUsuario.setColumns(10);
+						nuevoUsuario.setBounds(106, 172, 248, 35);
+						nuevoUsuario.addFocusListener(new FocusAdapter() {
+							@Override
+							public void focusGained(FocusEvent arg0) {
+								nuevoUsuario.setText("");
+							}
+						});
+						panelGestionCuentas.add(nuevoUsuario);
+						
+						nuevoContrasena = new JTextField();
+						nuevoContrasena.setText("Contrase\u00F1a");
+						nuevoContrasena.setColumns(10);
+						nuevoContrasena.setBounds(106, 218, 248, 35);
+						nuevoContrasena.addFocusListener(new FocusAdapter() {
+							@Override
+							public void focusGained(FocusEvent arg0) {
+								nuevoContrasena.setText("");
+							}
+						});
+						panelGestionCuentas.add(nuevoContrasena);
+						
+						JLabel lblRegresar = new JLabel("Regresar");
+						lblRegresar.setFont(new Font("Roboto", Font.PLAIN, 15));
+						lblRegresar.addMouseListener(new MouseAdapter() {
+							@Override
+							public void mouseClicked(MouseEvent arg0) {
+								panelGestionCuentas.setVisible(false);
+								funciones.setVisible(true);
+							}
+						});
+						lblRegresar.setBounds(10, 11, 85, 24);
+						panelGestionCuentas.add(lblRegresar);
+						
+						JButton btnRegistrarUsuario = new JButton("Registrar");
+						btnRegistrarUsuario.addMouseListener(new MouseAdapter() {
+							@Override
+							public void mouseClicked(MouseEvent arg0) {
+								try {
+									java.sql.Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/poo3","root","");
+									Statement statement = conexion.createStatement();
+									String sql = "insert into usuario(nombres,user,pass) values('"+nuevoNombre.getText()+"','"+nuevoUsuario.getText()+"','"+nuevoContrasena.getText()+"');";								
+									int resultSet = statement.executeUpdate(sql);
+									update_usuarios();
+								}catch(SQLException ex) {Logger.getLogger(JTable.class.getName()).log(Level.SEVERE, null, ex);}
+							}
+						});
+						btnRegistrarUsuario.setFont(new Font("Roboto", Font.PLAIN, 10));
+						btnRegistrarUsuario.setBounds(402, 172, 117, 35);
+						panelGestionCuentas.add(btnRegistrarUsuario);
 		
 		
 		
@@ -132,75 +228,52 @@ public class administrador {
 		
 		
 		
-		JLabel verCuentas = new JLabel("Ver cuentas");
-		verCuentas.addMouseListener(new MouseAdapter() {
+		JLabel gestionCuentas = new JLabel("Gestionar cuentas");
+		gestionCuentas.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				funciones.setVisible(false);
-				panelCrearCuenta.setVisible(true);
+				panelGestionCuentas.setVisible(true);
 			}
 		});
-		verCuentas.setBackground(Color.WHITE);
-		verCuentas.setOpaque(true);
-		verCuentas.setFont(new Font("Roboto", Font.BOLD, 20));
-		verCuentas.setHorizontalAlignment(SwingConstants.CENTER);
-		verCuentas.setBorder(new LineBorder(new Color(230, 230, 230), 1));
-		verCuentas.setBounds(258, 152, 258, 230);
-		funciones.add(verCuentas);
+		gestionCuentas.setBackground(Color.WHITE);
+		gestionCuentas.setOpaque(true);
+		gestionCuentas.setFont(new Font("Roboto", Font.BOLD, 20));
+		gestionCuentas.setHorizontalAlignment(SwingConstants.CENTER);
+		gestionCuentas.setBorder(new LineBorder(new Color(230, 230, 230), 1));
+		gestionCuentas.setBounds(258, 152, 258, 230);
+		funciones.add(gestionCuentas);
 		
-		JLabel modificarCuenta = new JLabel("Modificar cuenta");
-		modificarCuenta.setBackground(Color.WHITE);
-		modificarCuenta.setOpaque(true);
-		modificarCuenta.setHorizontalAlignment(SwingConstants.CENTER);
-		modificarCuenta.setFont(new Font("Roboto", Font.BOLD, 20));
-		modificarCuenta.setBorder(new LineBorder(new Color(230, 230, 230), 1));
-		modificarCuenta.setBounds(516, 152, 258, 230);
-		funciones.add(modificarCuenta);
+		JLabel otra1 = new JLabel("otra funcion");
+		otra1.setBackground(Color.WHITE);
+		otra1.setOpaque(true);
+		otra1.setHorizontalAlignment(SwingConstants.CENTER);
+		otra1.setFont(new Font("Roboto", Font.BOLD, 20));
+		otra1.setBorder(new LineBorder(new Color(230, 230, 230), 1));
+		otra1.setBounds(516, 152, 258, 230);
+		funciones.add(otra1);
 		
-		JLabel eliminarCuenta = new JLabel("Eliminar cuentas");
-		eliminarCuenta.setBackground(Color.WHITE);
-		eliminarCuenta.setOpaque(true);
-		eliminarCuenta.setHorizontalAlignment(SwingConstants.CENTER);
-		eliminarCuenta.setFont(new Font("Roboto", Font.BOLD, 20));
-		eliminarCuenta.setBorder(new LineBorder(new Color(230, 230, 230), 1));
-		eliminarCuenta.setBounds(774, 152, 258, 230);	
-		funciones.add(eliminarCuenta);
-
+		JLabel otra2 = new JLabel("otra funcion");
+		otra2.setBackground(Color.WHITE);
+		otra2.setOpaque(true);
+		otra2.setHorizontalAlignment(SwingConstants.CENTER);
+		otra2.setFont(new Font("Roboto", Font.BOLD, 20));
+		otra2.setBorder(new LineBorder(new Color(230, 230, 230), 1));
+		otra2.setBounds(774, 152, 258, 230);	
+		funciones.add(otra2);
 		
-		
-		
-		
-		
-		
-		
-		panelCrearCuenta.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				panelCrearCuenta.setVisible(false);
-				funciones.setVisible(true);
-			}
-		});
-		panelCrearCuenta.setBounds(0, 0, 1264, 681);
-		administrador.getContentPane().add(panelCrearCuenta);
-		panelCrearCuenta.setBackground(Color.RED);
-		
-		JScrollPane scrollPane = new JScrollPane();
-		panelCrearCuenta.add(scrollPane);
-		
-		tableUsuario = new JTable();
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			java.sql.Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/poo3","root","");
 			Statement statement = conexion.createStatement();
-			if(conexion != null & id_usuario.length() != 0) {		
-				ResultSet resultSet =statement.executeQuery("select id_usuario,nombres,user,descripcion from usuario INNER JOIN permiso ON usuario.id_usuario=permiso.id_permiso;");				
-				//ResultSet resultSet =statement.executeQuery("select * from eps;");				
+			if(conexion != null) {		
+				//ResultSet resultSet =statement.executeQuery("select Id_usuario ,nombres AS Nombre,user AS Usuario,descripcion AS Tipo_de_usuario from usuario INNER JOIN permiso ON usuario.id_usuario=permiso.id_permiso;");				
+				ResultSet resultSet =statement.executeQuery("select * from usuario ;");				
 				tableUsuario.setModel(DbUtils.resultSetToTableModel(resultSet));
 				conexion.close();						
 			}
 			
 		} catch(ClassNotFoundException o) {o.printStackTrace();	} catch (SQLException l) {l.printStackTrace();}
-		scrollPane.setViewportView(tableUsuario);
 		
 		
 		
@@ -222,13 +295,20 @@ public class administrador {
 		}catch(ClassNotFoundException o) {o.printStackTrace();	} catch (SQLException l) {l.printStackTrace();}
 		
 		
-		if(id_permiso!=1) {												
+		/*if(id_permiso!=1) {												
 			administrador.dispose();
 			administrador.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 			administrador=null;
 			inicio window = new inicio();
 			window.inicio.setVisible(true);
-		}
+		}*/
 		
+	}
+	void update_usuarios() throws SQLException {
+		java.sql.Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/poo3","root","");
+		Statement statement = conexion.createStatement();
+		//ResultSet resultSet =statement.executeQuery("select Id_usuario ,nombres AS Nombre,user AS Usuario,descripcion AS Tipo_de_usuario from usuario INNER JOIN permiso ON usuario.id_usuario=permiso.id_permiso;");				
+		ResultSet resultSet =statement.executeQuery("select * from usuario ;");				
+		tableUsuario.setModel(DbUtils.resultSetToTableModel(resultSet));
 	}
 }
