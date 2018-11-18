@@ -262,18 +262,10 @@ public class administrador {
 		otra2.setBounds(774, 152, 258, 230);	
 		funciones.add(otra2);
 		
+		//carga la lista de usuario y los pone en la tabla
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
-			java.sql.Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/poo3","root","");
-			Statement statement = conexion.createStatement();
-			if(conexion != null) {		
-				//ResultSet resultSet =statement.executeQuery("select Id_usuario ,nombres AS Nombre,user AS Usuario,descripcion AS Tipo_de_usuario from usuario INNER JOIN permiso ON usuario.id_usuario=permiso.id_permiso;");				
-				ResultSet resultSet =statement.executeQuery("select * from usuario ;");				
-				tableUsuario.setModel(DbUtils.resultSetToTableModel(resultSet));
-				conexion.close();						
-			}
-			
-		} catch(ClassNotFoundException o) {o.printStackTrace();	} catch (SQLException l) {l.printStackTrace();}
+			update_usuarios();
+		}catch (SQLException l) {l.printStackTrace();}
 		
 		
 		
@@ -307,8 +299,7 @@ public class administrador {
 	void update_usuarios() throws SQLException {
 		java.sql.Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/poo3","root","");
 		Statement statement = conexion.createStatement();
-		//ResultSet resultSet =statement.executeQuery("select Id_usuario ,nombres AS Nombre,user AS Usuario,descripcion AS Tipo_de_usuario from usuario INNER JOIN permiso ON usuario.id_usuario=permiso.id_permiso;");				
-		ResultSet resultSet =statement.executeQuery("select * from usuario ;");				
+		ResultSet resultSet =statement.executeQuery("select Id_usuario ,nombres AS Nombre,user AS Usuario,descripcion AS Tipo_de_usuario from usuario INNER JOIN permiso ON permiso.id_permiso=usuario.id_permiso ORDER BY Tipo_de_usuario;");
 		tableUsuario.setModel(DbUtils.resultSetToTableModel(resultSet));
 	}
 }
